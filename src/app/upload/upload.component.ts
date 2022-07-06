@@ -12,20 +12,39 @@ export class UploadComponent implements OnInit {
   profileForm:any = FormGroup;
 
   name: string = '';
-  file: any;
+  files: any;
+  pdfFile: any;
+  result: any;
 
   getName(name: string){
     this.name = name;
   }
 
   getFile(event: any){
-    this.file = event.target.files[0];
-    console.log('file', this.file);
+    this.files = event.target.files[0];
+    console.log('file', this.files);
   }
 
   constructor(private fb: FormBuilder, private fileUploadService: UploadService, private http: HttpClient) { }
 
   ngOnInit() {
+    
+  }
+
+  getPdf(event: any){
+    this.pdfFile = event.target.files[0];
+    console.log(this.pdfFile);
+  }
+
+  
+
+   getBase64(pdfFile:any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(pdfFile);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 
   onSelectedFile(event: any){
@@ -33,7 +52,7 @@ export class UploadComponent implements OnInit {
       const profile = event.target.files[0];
       this.profileForm.get('profile').setValue(profile);
     }
-    console.log(event.target.files);
+    console.log("This is the uploaded file: " + event.target.files);
   }
 
   onSubmit(){
@@ -47,12 +66,26 @@ export class UploadComponent implements OnInit {
    console.log('button pressed');
     let formData = new FormData();
     formData.set("name", this.name);
-    formData.set("file", this.file);
+    formData.set("file", this.files);
 
     this.http.post('http://localhost:8080/uploadFile', formData).subscribe(
       resp => {}
     )
 
+  }
+
+  getEncodedFiles(){
+    this.getBase64(this.pdfFile).then(
+      response => { this.result = response}).then(
+        () => {console.log(this.result)
+      
+        let formData = new FormData();
+        formData.set("base64", this.result);
+
+    this.http.post('http://localhost:4000/CheckOn', formData).subscribe(
+      resp => {}
+    )
+  });
   }
 
 }

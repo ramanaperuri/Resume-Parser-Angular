@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CandidatesDetailComponent } from './candidates-detail/candidates-detail.component';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { HomeContentComponent } from './home-content/home-content.component';
 import { HomeComponent } from './home/home.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { LoginComponent } from './login/login.component';
@@ -19,8 +20,9 @@ const routes: Routes = [
   { path: 'candidates-detail', component: CandidatesDetailComponent},
   { path: 'reqres', component: ReqresComponent},
   { path: 'jobs', component: JobsComponent},
-  {path: 'upload', component: UploadComponent},
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: 'upload', component: UploadComponent},
+  { path: 'home-content', component: HomeContentComponent},
+  { path: '', redirectTo: 'home-content', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ import { ReqresComponent } from './reqres/reqres.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { UploadComponent } from './upload/upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomeContentComponent } from './home-content/home-content.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CandidatesDetailComponent,
     ReqresComponent,
     JobsComponent,
-    UploadComponent
+    UploadComponent,
+    HomeContentComponent
   ],
   imports: [
     BrowserModule,

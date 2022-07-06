@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -18,13 +19,21 @@ export class LoginComponent implements OnInit {
   password!: string;
   showSpinner!: true;
 
-  login() : void {
+  public login(username: string, password: string) {
+    const headers = new HttpHeaders({
+      Authorization: 'Basic '+ btoa(username+":"+password)
+    })
+    this.http.get("http://localhost:8080/",{headers, responseType:'text' as 'json'});
+    ;
+  }
+
+  /*login() : void {
     if(this.username == 'admin' && this.password == 'admin'){
      this.router.navigate(["/home"]);
     }else {
       alert("Invalid credentials");
     }
-  }
+  }*/
 
   signIn() : void {
     this.router.navigate(["./home"]);
